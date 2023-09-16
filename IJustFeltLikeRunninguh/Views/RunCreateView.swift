@@ -40,6 +40,7 @@ struct RunCreateView: View {
                     Text("Distance")
                     TextField("3.15 (miles)", text: $run.distance)
                         .keyboardType(.decimalPad)
+//                        .numbersOnly(
                         .focused($focusedField, equals: .distance)
 //                        .onReceive(Just(run.distance)) { newValue in
 //                            let filtered = newValue.filter { "0123456789.".contains($0) }
@@ -110,19 +111,8 @@ struct RunCreateView: View {
 //                .padding()
 //                .background(Color.black)
 //                .cornerRadius(5)
-        }
-        Button {
-            context.insert(run)
-            dismiss()
-        } label: {
-            Text("Add")
-                .padding()
-                .cornerRadius(40)
-                .frame(maxWidth: /*@START_MENU_TOKEN@*/ .infinity/*@END_MENU_TOKEN@*/)
-                .font(/*@START_MENU_TOKEN@*/ .title/*@END_MENU_TOKEN@*/)
-                .background(Color.pink)
-                .foregroundColor(.white)
         }.toolbar {
+            // https://github.com/StewartLynch/Numeric-TextFields-in-SwiftUI/blob/main/NumericTextFields/ContentView.swift
             ToolbarItem(placement: .keyboard) {
                 Spacer()
             }
@@ -134,6 +124,21 @@ struct RunCreateView: View {
                 }
             }
         }
+        .onAppear {
+            UITextField.appearance().clearButtonMode = .whileEditing
+        }
+//        Button {
+//            context.insert(run)
+//            dismiss()
+//        } label: {
+//            Text("Add")
+//                .padding()
+//                .cornerRadius(40)
+//                .frame(maxWidth: /*@START_MENU_TOKEN@*/ .infinity/*@END_MENU_TOKEN@*/)
+//                .font(/*@START_MENU_TOKEN@*/ .title/*@END_MENU_TOKEN@*/)
+//                .background(Color.pink)
+//                .foregroundColor(.white)
+//        }
     }
 }
 
