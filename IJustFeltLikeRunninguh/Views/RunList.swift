@@ -46,10 +46,25 @@ struct RunList: View {
                 } else {
                     List(runs) { run in
                         HStack {
-                            Text("\(run.date, format: Date.FormatStyle(date: .numeric, time: .shortened))")
-                                .font(.callout)
+                            Image(systemName: "figure.run")
+                                .font(.title)
 
-                            Text(run.distance)
+                            VStack(alignment: .leading) {
+                                Text("\(run.distance) miles")
+                                    .font(.headline)
+
+                                HStack {
+                                    Image(systemName: "calendar")
+                                    Text("\(run.date, format: Date.FormatStyle(date: .numeric))")
+                                }
+                                .font(.subheadline)
+
+                                HStack {
+                                    Image(systemName: "stopwatch")
+                                    Text("\(run.time)")
+                                }
+                                .font(.subheadline)
+                            }
                         }
                         .swipeActions(allowsFullSwipe: false) {
                             Button(role: .destructive) {
@@ -65,7 +80,7 @@ struct RunList: View {
                             } label: {
                                 Label("Edit", systemImage: "pencil")
                             }
-                            .tint(.gray)
+                            .tint(.blue)
                         }
                     }.navigationTitle("Runs")
                 }

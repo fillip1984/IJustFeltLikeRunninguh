@@ -24,10 +24,11 @@ class Run {
     var time: String
     var averagePace: String
     var averageHeartRate: String
-    var runFormat: String
 
+    // TODO: switch to enums once that works for pickers and persistence in SwiftData
     var weather: String
     var mood: String
+    var runFormat: String // 5k, 10k, 10 miler, Mini-marathon, Marathon
 
     init(
         id: String = UUID().uuidString,
