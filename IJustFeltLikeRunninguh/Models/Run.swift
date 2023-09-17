@@ -21,19 +21,20 @@ class Run {
 
     var date: Date
     var distance: String
-    var duration: String
+    var time: String
     var averagePace: String
-    var averageHeartRate: String?
-    var runFormat: String?
-    var weather: String?
-    var mood: String?
+    var averageHeartRate: String
+    var runFormat: String
+
+    var weather: String
+    var mood: String
 
     init(
-        id: String = "",
+        id: String = UUID().uuidString,
         createdAt: Date = .now,
         date: Date = .now,
         distance: String = "",
-        duration: String = "",
+        time: String = "",
         averagePace: String = "",
         averageHeartRate: String = "",
         runFormat: String = "",
@@ -44,7 +45,7 @@ class Run {
         self.createdAt = createdAt
         self.date = date
         self.distance = distance
-        self.duration = duration
+        self.time = time
         self.averagePace = averagePace
         self.averageHeartRate = averageHeartRate
         self.runFormat = runFormat
@@ -52,3 +53,11 @@ class Run {
         self.mood = mood
     }
 }
+
+// enum WeatherType: String, Codable, CaseIterable {
+//    case Unknown, Cold, Wet, Fair, Hot
+// }
+//
+// enum MoodType: String, Codable, CaseIterable {
+//    case Unknown, Terrible, Bad, Okay, Good, Great
+// }

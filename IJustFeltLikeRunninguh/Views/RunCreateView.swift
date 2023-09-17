@@ -8,115 +8,141 @@
 import Combine
 import SwiftUI
 
-enum MoodType: String, CaseIterable, Identifiable {
-    case terrible, bad, okay, good, great
-    var id: Self { self }
+// enum MoodType: String, CaseIterable, Identifiable {
+//    case terrible, bad, okay, good, great
+//    var id: Self { self }
+// }
+//
+// enum WeatherType: String, CaseIterable, Identifiable {
+//    case cold, wet, fair, hot
+//    var id: Self { self }
+// }
+
+enum FormField: Hashable {
+    case distance, time, averagePace, averageHeartRate
 }
 
-enum WeatherType: String, CaseIterable, Identifiable {
-    case cold, wet, fair, hot
-    var id: Self { self }
-}
+let WeatherType = ["Cold", "Wet", "Fair", "Hot"]
+let MoodType = ["Terrible", "Bad", "Okay", "Good", "Great"]
 
 struct RunCreateView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var context
-    
+
     @State var run = Run()
-    
-    enum FocusedField {
-        case date, distance, duration
+
+    var isValid: Bool {
+        if !run.distance.isEmpty
+            && !run.time.isEmpty
+            && !run.averagePace.isEmpty
+        {
+            return true
+        }
+
+        return false
     }
 
-    @FocusState var focusedField: FocusedField?
-    
+    enum FocusedField {
+        case date, distance, time, averagePace, averageHeartRate
+    }
+
+    @FocusState var focusedField: FormField?
+
     var body: some View {
         Form {
-            Section(header: Text("Details")) {
+            Section {
                 DatePicker("Date", selection: $run.date, displayedComponents: .date)
-                    .focused($focusedField, equals: .date)
-            
+
                 HStack {
                     Text("Distance")
                     TextField("3.15 (miles)", text: $run.distance)
                         .keyboardType(.decimalPad)
-//                        .numbersOnly(
                         .focused($focusedField, equals: .distance)
-//                        .onReceive(Just(run.distance)) { newValue in
-//                            let filtered = newValue.filter { "0123456789.".contains($0) }
-//                            if filtered != newValue {
-//                                $run.distance. = filtered
-//                            }
-//                        }
                         .multilineTextAlignment(.trailing)
                 }
-                    
+
                 HStack {
-                    Text("Duration")
-                    TextField("35:16 (hh:mm:ss)", text: $run.duration)
-                        .keyboardType(.decimalPad)
-                        .focused($focusedField, equals: .duration)
-//                        .onReceive(Just(run.distance)) { newValue in
-//                            let filtered = newValue.filter { "0123456789".contains($0) }
-//                            if filtered != newValue {
-//                                $run.distance = filtered
-//                            }
-//                        }
+                    Text("Time")
+                    TextField("38:16 (hh:mm:ss)", text: $run.time)
+                        .keyboardType(.numberPad)
+                        .focused($focusedField, equals: .time)
                         .multilineTextAlignment(.trailing)
                 }
-            
-                Text("Pace")
-                Text("Heart rate average")
-            }
-            
-            // picker per internet searches, I like the Apple suggestion better
-            Section(header: Text("Weather")) {
-                Picker(selection: $run.weather, label: Text("Weather")) {
-//                    Text("Unknown").tag(nil as WeatherType?)
-                    Text("Cold").tag(WeatherType.cold as WeatherType?)
-                    Text("Wet").tag(WeatherType.wet as WeatherType?)
-                    Text("Fair").tag(WeatherType.fair as WeatherType?)
-                    Text("Hot").tag(WeatherType.hot as WeatherType?)
+
+                HStack {
+                    Text("Avg. Pace")
+                    TextField("12:14 (mm:ss)", text: $run.averagePace)
+                        .keyboardType(.numberPad)
+                        .focused($focusedField, equals: .averagePace)
+                        .multilineTextAlignment(.trailing)
                 }
-                .pickerStyle(.segmented)
+
+                HStack {
+                    Text("Avg. Heart Rate")
+                    TextField("133 (BPM)", text: $run.averageHeartRate)
+                        .keyboardType(.numberPad)
+                        .focused($focusedField, equals: .averageHeartRate)
+                        .multilineTextAlignment(.trailing)
+                }
+            } header: {
+                Text("Run Details")
             }
-            
-            // per apple's documentation
-            Section(header: Text("Mood")) {
+
+            Section {
+                Picker("Weather", selection: $run.weather) {
+                    ForEach(WeatherType, id: \.self) { weatherOption in
+                        Text(weatherOption)
+                    }
+                }.pickerStyle(.segmented)
+            } header: {
+                Text("Weather")
+            }
+
+            Section {
                 Picker("Mood", selection: $run.mood) {
-//                    Text("Unknown").tag(nil as MoodType?)
-                    Text("Terrible").tag(MoodType.terrible as MoodType?)
-                    Text("Bad").tag(MoodType.bad as MoodType?)
-                    Text("Okay").tag(MoodType.okay as MoodType?)
-                    Text("Good").tag(MoodType.good as MoodType?)
-                    Text("Great").tag(MoodType.great as MoodType?)
-                }
-                .pickerStyle(.segmented)
+                    ForEach(MoodType, id: \.self) { moodOption in
+                        Text(moodOption)
+                    }
+                }.pickerStyle(.segmented)
+            } header: {
+                Text("Mood")
             }
-            
-//            Section {
-//                Toggle(isOn: $isPrivate) {
-//                    Text("Keep private")
-//                }
-//            }
-            
-//                Button(action: { print("saving") }) {
-//                    HStack {
-//                        Spacer()
-//                        Text("Save").font(.title).foregroundColor(.white)
-//                        Spacer()
-//                    }
-//                }
-//                .frame(width: .infinity)
-//                .padding()
-//                .background(Color.black)
-//                .cornerRadius(5)
+
+            // Shouldn't this be a toolbar item on the navigation stack?
+            // See how I made the button full width: https://stackoverflow.com/questions/56471004/making-button-span-across-vstack
+            VStack {
+                Button {
+                    context.insert(run)
+                    dismiss()
+                } label: {
+                    Text("Add")
+                        .frame(maxWidth: .infinity)
+                        .font(.title)
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(!isValid)
+            }
+
         }.toolbar {
-            // https://github.com/StewartLynch/Numeric-TextFields-in-SwiftUI/blob/main/NumericTextFields/ContentView.swift
-            ToolbarItem(placement: .keyboard) {
+            // not working right now, maybe a bug in iOS 17 or my beta version of xcode/ios?
+            ToolbarItemGroup(placement: .keyboard) {
+                Button {
+                    focusedField = nextField(currentField: focusedField)
+                } label: {
+                    Image(systemName: "chevron.down")
+                }
+
+                Button {
+                    focusedField = previousField(currentField: focusedField)
+                } label: {
+                    Image(systemName: "chevron.up")
+                }
+
+                // fixes bug where arrows appear correctly but then after dismissing keyboard and then bringing it back the 2nd item is shifted near other group
                 Spacer()
             }
-            ToolbarItem(placement: .keyboard) {
+
+            ToolbarItemGroup(placement: .keyboard) {
                 Button {
                     focusedField = nil
                 } label: {
@@ -124,21 +150,34 @@ struct RunCreateView: View {
                 }
             }
         }
-        .onAppear {
-            UITextField.appearance().clearButtonMode = .whileEditing
-        }
-//        Button {
-//            context.insert(run)
-//            dismiss()
-//        } label: {
-//            Text("Add")
-//                .padding()
-//                .cornerRadius(40)
-//                .frame(maxWidth: /*@START_MENU_TOKEN@*/ .infinity/*@END_MENU_TOKEN@*/)
-//                .font(/*@START_MENU_TOKEN@*/ .title/*@END_MENU_TOKEN@*/)
-//                .background(Color.pink)
-//                .foregroundColor(.white)
-//        }
+    }
+}
+
+func nextField(currentField: FormField?) -> FormField {
+    if currentField == nil {
+        return .distance
+    }
+
+    switch currentField {
+        case .distance: return .time
+        case .time: return .averagePace
+        case .averagePace: return .averageHeartRate
+        case .averageHeartRate: return .distance
+        default: return .distance
+    }
+}
+
+func previousField(currentField: FormField?) -> FormField {
+    if currentField == nil {
+        return .averageHeartRate
+    }
+
+    switch currentField {
+        case .distance: return .averageHeartRate
+        case .time: return .distance
+        case .averagePace: return .time
+        case .averageHeartRate: return .averagePace
+        default: return .averageHeartRate
     }
 }
 

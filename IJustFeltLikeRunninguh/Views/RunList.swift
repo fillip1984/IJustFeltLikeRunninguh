@@ -48,6 +48,8 @@ struct RunList: View {
                         HStack {
                             Text("\(run.date, format: Date.FormatStyle(date: .numeric, time: .shortened))")
                                 .font(.callout)
+
+                            Text(run.distance)
                         }
                         .swipeActions(allowsFullSwipe: false) {
                             Button(role: .destructive) {
