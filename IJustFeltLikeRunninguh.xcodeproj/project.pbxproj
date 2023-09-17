@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29174B582AB75A7D001D21C8 /* NumbersOnlyViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29174B572AB75A7D001D21C8 /* NumbersOnlyViewModifier.swift */; };
+		29174B5A2AB75B23001D21C8 /* DurationViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29174B592AB75B23001D21C8 /* DurationViewModifier.swift */; };
 		298593A12AB5019C009884D9 /* IJustFeltLikeRunninguhApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298593A02AB5019C009884D9 /* IJustFeltLikeRunninguhApp.swift */; };
 		298593A32AB5019C009884D9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298593A22AB5019C009884D9 /* ContentView.swift */; };
 		298593A52AB5019D009884D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 298593A42AB5019D009884D9 /* Assets.xcassets */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		29174B572AB75A7D001D21C8 /* NumbersOnlyViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbersOnlyViewModifier.swift; sourceTree = "<group>"; };
+		29174B592AB75B23001D21C8 /* DurationViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationViewModifier.swift; sourceTree = "<group>"; };
 		2985939D2AB5019C009884D9 /* IJustFeltLikeRunninguh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IJustFeltLikeRunninguh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		298593A02AB5019C009884D9 /* IJustFeltLikeRunninguhApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IJustFeltLikeRunninguhApp.swift; sourceTree = "<group>"; };
 		298593A22AB5019C009884D9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -38,6 +42,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29174B562AB75A5C001D21C8 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				29174B572AB75A7D001D21C8 /* NumbersOnlyViewModifier.swift */,
+				29174B592AB75B23001D21C8 /* DurationViewModifier.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
 		298593942AB5019C009884D9 = {
 			isa = PBXGroup;
 			children = (
@@ -57,6 +70,7 @@
 		2985939F2AB5019C009884D9 /* IJustFeltLikeRunninguh */ = {
 			isa = PBXGroup;
 			children = (
+				29174B562AB75A5C001D21C8 /* ViewModifiers */,
 				298593AF2AB502A1009884D9 /* Models */,
 				298593AE2AB50292009884D9 /* Views */,
 				298593A02AB5019C009884D9 /* IJustFeltLikeRunninguhApp.swift */,
@@ -164,7 +178,9 @@
 			files = (
 				298593B12AB50312009884D9 /* RunList.swift in Sources */,
 				298593B52AB51794009884D9 /* RunDetailView.swift in Sources */,
+				29174B582AB75A7D001D21C8 /* NumbersOnlyViewModifier.swift in Sources */,
 				298593B32AB5083F009884D9 /* Run.swift in Sources */,
+				29174B5A2AB75B23001D21C8 /* DurationViewModifier.swift in Sources */,
 				298593A32AB5019C009884D9 /* ContentView.swift in Sources */,
 				298593A12AB5019C009884D9 /* IJustFeltLikeRunninguhApp.swift in Sources */,
 			);

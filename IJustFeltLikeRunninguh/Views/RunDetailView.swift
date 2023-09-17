@@ -57,7 +57,7 @@ struct RunDetailView: View {
                 HStack {
                     Text("Distance")
                     TextField("3.15 (miles)", text: $run.distance)
-                        .keyboardType(.decimalPad)
+                        .numbersOnly($run.distance, includeDecimal: true)
                         .focused($focusedField, equals: .distance)
                         .multilineTextAlignment(.trailing)
                 }
@@ -65,7 +65,7 @@ struct RunDetailView: View {
                 HStack {
                     Text("Time")
                     TextField("38:16 (hh:mm:ss)", text: $run.time)
-                        .keyboardType(.numberPad)
+                        .durationInput($run.time)
                         .focused($focusedField, equals: .time)
                         .multilineTextAlignment(.trailing)
                 }
@@ -73,7 +73,7 @@ struct RunDetailView: View {
                 HStack {
                     Text("Avg. Pace")
                     TextField("12:14 (mm:ss)", text: $run.averagePace)
-                        .keyboardType(.numberPad)
+                        .durationInput($run.averagePace)
                         .focused($focusedField, equals: .averagePace)
                         .multilineTextAlignment(.trailing)
                 }
@@ -81,7 +81,7 @@ struct RunDetailView: View {
                 HStack {
                     Text("Avg. Heart Rate")
                     TextField("133 (BPM)", text: $run.averageHeartRate)
-                        .keyboardType(.numberPad)
+                        .numbersOnly($run.averageHeartRate)
                         .focused($focusedField, equals: .averageHeartRate)
                         .multilineTextAlignment(.trailing)
                 }
@@ -135,7 +135,6 @@ struct RunDetailView: View {
                     .disabled(!isValid)
                 }
             }
-
         }.toolbar {
             // not working right now, maybe a bug in iOS 17 or my beta version of xcode/ios?
             ToolbarItemGroup(placement: .keyboard) {
