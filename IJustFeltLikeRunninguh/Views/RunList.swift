@@ -88,7 +88,8 @@ struct RunList: View {
             .sheet(item: $runToEdit) {
                 runToEdit = nil
             } content: { run in
-                RunEditView(run: run)
+                RunCreateView(run: run,
+                              formMode: "edit")
             }
 
             // FAB: https://sarunw.com/posts/floating-action-button-in-swiftui/
@@ -105,7 +106,7 @@ struct RunList: View {
             }
             .padding()
         }.sheet(isPresented: $showCreateRunSheet) {
-            RunCreateView()
+            RunCreateView(formMode: "create")
         }
     }
 }

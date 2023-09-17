@@ -29,7 +29,8 @@ struct RunCreateView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var context
 
-    @State var run = Run()
+    @Bindable var run = Run()
+    var formMode: String
 
     var isValid: Bool {
         if !run.distance.isEmpty
@@ -111,16 +112,28 @@ struct RunCreateView: View {
             // Shouldn't this be a toolbar item on the navigation stack?
             // See how I made the button full width: https://stackoverflow.com/questions/56471004/making-button-span-across-vstack
             VStack {
-                Button {
-                    context.insert(run)
-                    dismiss()
-                } label: {
-                    Text("Add")
-                        .frame(maxWidth: .infinity)
-                        .font(.title)
+                if formMode == "create" {
+                    Button {
+                        context.insert(run)
+                        dismiss()
+                    } label: {
+                        Text("Add")
+                            .frame(maxWidth: .infinity)
+                            .font(.title)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(!isValid)
+                } else {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Update")
+                            .frame(maxWidth: .infinity)
+                            .font(.title)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(!isValid)
                 }
-                .buttonStyle(.borderedProminent)
-                .disabled(!isValid)
             }
 
         }.toolbar {
@@ -181,6 +194,6 @@ func previousField(currentField: FormField?) -> FormField {
     }
 }
 
-#Preview {
-    RunCreateView()
-}
+// #Preview {
+//    RunCreateView(formMode: "create")
+// }
