@@ -135,7 +135,9 @@ struct RunDetailView: View {
                     .disabled(!isValid)
                 }
             }
-        }.toolbar {
+        }
+        .tint(.pink)
+        .toolbar {
             // not working right now, maybe a bug in iOS 17 or my beta version of xcode/ios?
             ToolbarItemGroup(placement: .keyboard) {
                 Button {
