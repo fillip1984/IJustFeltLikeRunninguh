@@ -25,7 +25,7 @@ enum FormField: Hashable {
 let WeatherType = ["Cold", "Wet", "Fair", "Hot"]
 let MoodType = ["Terrible", "Bad", "Okay", "Good", "Great"]
 
-struct RunCreateView: View {
+struct RunDetailView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var context
 

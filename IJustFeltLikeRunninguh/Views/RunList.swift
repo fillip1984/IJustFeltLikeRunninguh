@@ -88,7 +88,7 @@ struct RunList: View {
             .sheet(item: $runToEdit) {
                 runToEdit = nil
             } content: { run in
-                RunCreateView(run: run,
+                RunDetailView(run: run,
                               formMode: "edit")
             }
 
@@ -106,7 +106,7 @@ struct RunList: View {
             }
             .padding()
         }.sheet(isPresented: $showCreateRunSheet) {
-            RunCreateView(formMode: "create")
+            RunDetailView(formMode: "create")
         }
     }
 }
